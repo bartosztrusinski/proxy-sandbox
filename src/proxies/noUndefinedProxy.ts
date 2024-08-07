@@ -1,11 +1,11 @@
 const noUndefinedProxy = <T extends object>(target: T): T =>
   new Proxy(target, {
-    get(target, prop) {
+    get(target, prop, receiver) {
       if (!(prop in target)) {
         throw new Error(`Property ${String(prop)} does not exist`);
       }
 
-      return Reflect.get(target, prop);
+      return Reflect.get(target, prop, receiver);
     },
   });
 
