@@ -26,9 +26,9 @@ let car: Car = {
 car = noUndefinedProxy(car);
 
 try {
-  console.log(car.brand);
+  console.log(`Car's brand: ${car.brand}`);
   // @ts-expect-error: year is undefined - proxy throws an error
-  console.log(car.year);
+  console.log(`Car's year: ${car.year}`);
 } catch (error) {
   console.error(error instanceof Error ? error.message : 'An error occurred');
 }
