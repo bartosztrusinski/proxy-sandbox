@@ -1,2 +1,2 @@
 import './proxies/noUndefinedProxy';
-import './proxies/negativeIndexArray';
+import './proxies/negativeIndexArrayProxy';
