@@ -1,8 +1,6 @@
 type Callback = (key: string | symbol, value: unknown) => void;
 type Subscribe = (callback: Callback) => void;
-type Observer = <T extends object>(
-  target: T,
-) => { observer: T; subscribe: Subscribe };
+type Observer = <T extends object>(target: T) => [T, Subscribe];
 
 const observerProxy: Observer = (target) => {
   const subscribers = new Set<Callback>();
@@ -23,7 +21,7 @@ const observerProxy: Observer = (target) => {
     },
   });
 
-  return { observer, subscribe };
+  return [observer, subscribe];
 };
 
 interface User {
@@ -33,8 +31,12 @@ interface User {
   eyes: 'blue' | 'green' | 'brown';
 }
 
-const initUser: User = { age: 45, hair: 'short', eyes: 'blue' };
-const { observer: user, subscribe } = observerProxy(initUser);
+const [user, subscribe] = observerProxy<User>({
+  age: 45,
+  hair: 'short',
+  eyes: 'blue',
+});
+
 const observerElement = document.querySelector(
   '[data-proxy="observer"]',
 ) as HTMLElement;
@@ -50,7 +52,7 @@ subscribe(() => {
 });
 
 subscribe((key, value) => {
-  console.warn(`SET ${String(key)}=${value}`);
+  console.warn(`SET ${String(key)} to ${value}`);
 });
 
 user.name = 'John';
