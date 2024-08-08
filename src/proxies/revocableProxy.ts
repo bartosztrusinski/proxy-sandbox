@@ -10,7 +10,7 @@ try {
   console.info(revocableQuery.data); // Sensitive data
 
   const revokeQuery = revokes.get(revocableQuery); // Easily get revoke function of given proxy
-  revokeQuery(); // Disable proxy
+  revokeQuery(); // Disable proxy - revoke access to the sensitive data
 
   console.info(revocableQuery.data); // Cannot perform 'get' on a proxy that has been revoked
 } catch (error) {
